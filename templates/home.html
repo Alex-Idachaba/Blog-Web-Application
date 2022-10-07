@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+                <!-- Breaking -->
+    <br>
+    <br> 
+      <div class="container">  
+        <div class="row">
+        <div class="col-10">
+          {% for obj in breaking %}
+          <div class="post">
+            <header>
+            <div class=" text-center">
+              <a href="{{ obj.get_absolute_url }}"><h1 id='breakingtitle' class="h4">{{ obj.title }}</h1></a>
+            </div>
+            </header>
+            <div class="post-thumbnail"><a href="{{ obj.get_absolute_url }}"><img id="breakingimage" src="{{ obj.thumbnail.url }}" alt="..." class="img-fluid rounded mx-auto d-block"></a></div>
+            </div>
+          {% endfor %}
+          <hr>
+        </div>
+        {% include 'sidebar.html' with latest=latest category_count=category_count %}
+        </div>
+      </div>
+    <!--Posts-->
+      <section class="latest-posts"> 
+      <div class="container">
+        <div class="row col-10">
+          {% for obj in queryset %}
+          <div class="post col-md-4">
+            <div class="post-thumbnail"><a href="{{ obj.get_absolute_url }}"><img src="{{ obj.thumbnail.url }}" alt="..." class="img-fluid"></a></div>
+            <div class="post-details">
+              <div class="post-meta d-flex justify-content-between">
+                <div class="date">{{ obj.timestamp }}</div>
+                <div class="comments meta-last"><i class="fa fa-comments" aria-hidden="true"></i>{{ obj.comment_count }}</div>
+              </div>
+              {% for cat in obj.categories.all %}
+                  <strong><a style="color: black;" href="#">{{ cat }}</a></strong>
+              {% endfor %}
+              <p style="text-transform: uppercase;" >By {{ obj.author.user.username }}</p>
+              <a href="{{ obj.get_absolute_url }}"><h3 class="h4">{{ obj.title }}</h3></a>
+              <p class="text-muted">{{ obj.body|linebreaks|truncatechars:200 }}</p>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- Divider Section-->
+
+    <!-- Pagination -->
+          <div class="container">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% if queryset.has_previous %}                
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ queryset.number }}" class="page-link active">{{ queryset.number }}</a></li>
+                {% if queryset.has_next %}
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+              </ul>
+            </nav>
+
+            {% if is_paginated %}
+            
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% if page_obj.has_previous %}                
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ page_obj.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ page_obj.number }}" class="page-link active">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a style="color: black;" href="?{{ page_request_var }}={{ page_obj.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+              </ul>
+            </nav>
+            
+            {% endif %}
+          </div>
+          <br>
+    <!-- Advert -->
+    
+    <div id="advert" class="jumbotron text-center">
+        <div class="intro">
+            <h1 style="color: whitesmoke;" >FOR SCALABILITY AND WEB SECURITY, NOTHING BEATS<span style="color: #84e296;"> DJANGO</span></h1>
+            <a href="https://www.djangoproject.com/" class="btn btn-outline-light btn-rounded" role="button" aria-pressed="true" target="_blank" >Start Learning Django Now !!!</a>
+        </div>
+    </div>
+   
+    <!-- Newsletter Section-->
+    <section class="newsletter no-padding-top">    
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Subscribe for Free Email Newsletter </h2>
+            <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <div class="col-md-8">
+            <div class="form-holder">
+              <form action="." method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="form-inline mt-2 mt-md-0 ml-auto">
+                <input type="email" name="email" id="email" placeholder="Type in your email" class="form-control mr-sm-2">
+                <button type="submit" class="btn btn-dark">Sign Me Up!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Footer -->
+<footer class="page-footer font-small mdb-color pt-4">
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left">
+
+    <!-- Footer links -->
+    <div class="row text-center text-md-left mt-3 pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h6 class="text-uppercase mb-4 font-weight-bold">About this Blog</h6>
+        <p>This is a blog created for demo purpose and as a portfolio.</p>
+      </div>
+      <!-- Grid column -->
+
+      <hr class="w-100 clearfix d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3" >
+        <h6 class="text-uppercase mb-4 font-weight-bold" >Inspirations</h6>
+        <p>
+          <a id="categories1" href="https://techcrunch.com/" target="_blank">Technology Blog</a>
+        </p>
+        <p>
+          <a id="categories1" href="https://www.huffpost.com/" target="_blank">General Blog</a>
+        </p>
+      
+      </div>
+      <!-- Grid column -->
+
+      <hr class="w-100 clearfix d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+        <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
+        <p>
+          <a id="categories2" href="https://stackoverflow.com/" target="_blank">Stack Overflow</a>
+        </p>
+        <p>
+          <a id="categories2" href="https://realpython.com/" target="_blank">Real Python</a>
+        </p>
+      </div>
+
+      <!-- Grid column -->
+      <hr class="w-100 clearfix d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+        <p>
+          <i class="fas fa-home mr-3"></i> Abuja, Nigeria</p>
+        <p>
+          <i class="fas fa-envelope mr-3"></i> click2alex@gmail.com</p>
+        <p>
+          <i class="fas fa-phone mr-3"></i> +234-8055480425</p>
+        <p>
+          <i class="fas fa-print mr-3"></i></p>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Footer links -->
+
+    <hr>
+
+    <!-- Grid row -->
+    <div class="row d-flex align-items-center">
+
+      <!-- Grid column -->
+      <div class="col-3">
+
+        <!--Copyright-->
+        <p class="text-center text-md-left">© 2021 Copyright:
+          <a href="https://github.com/Alex-Idachaba" target="_blank">
+            <strong id="blog_owner"> Alex Idachaba</strong>
+          </a>
+        </p>
+
+      </div>
+            <!-- Grid column -->
+      <div class="col-6">
+
+        <!--Powere_Host-->
+        <p class="text-center text-md-left">
+            Powered by <span><a style="color: black;" href="https://www.djangoproject.com/" target="_blank">Django</a></span> and <span><a style="color: black;" href="https://getbootstrap.com/" target="_blank">Bootstrap</a></span> | Hosted by <span><a style="color: black;" href="https://heroku.com/" target="_blank">Heroku</a></span>
+        </p>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-3">
+
+        <!-- Social buttons -->
+        <div class="text-center text-md-right">
+          <ul class="list-unstyled list-inline">
+            <li class="list-inline-item">
+              <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <i class="fab fa-google-plus-g"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+</footer>
+<!-- Footer -->
+{% endblock content %}

@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet");
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --Sniglet-font: "Sniglet", cursive;
+  --Rubik: "Rubik", cursive;
+  --Patua: "Patua One", cursive;
+  --Lobster: "lobster", cursive;
+}
+
+#breakingtitle {
+  font-family: "Open Sans", sans-serif;
+  font-size: 50px;
+}
+
+#breakingimage {
+  height: 400px;
+}
+
+#blogname {
+  color: whitesmoke;
+}
+
+#home,
+#about,
+#create {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+#post {
+  color: whitesmoke;
+  text-decoration: none;
+  padding-left: 5px;
+}
+
+#signin {
+  color: whitesmoke;
+  text-decoration: none;
+  padding-left: 5px;
+}
+
+#title {
+  font-family: "Open Sans", sans-serif;
+}
+
+#title_link {
+  color: black;
+  text-decoration: none;
+}
+#body_link {
+  color: black;
+  text-decoration: none;
+}
+
+#advert {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../images/django.jpg");
+  background-size: cover;
+  background-position: center bottom;
+}
+
+.django-text {
+  color: whitesmoke;
+}
+
+.h4 {
+  color: black;
+}
+
+#categories1 {
+  color: black;
+}
+
+#categories2 {
+  color: black;
+}
+
+#blog_owner {
+  color: black;
+}
